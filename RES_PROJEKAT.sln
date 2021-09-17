@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF", "WPF\WPF.csproj", "{E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{70F47414-D861-43BB-BEF0-B707EF7A656D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BazaPodataka", "BazaPodataka\BazaPodataka.csproj", "{BE9B3ED8-CC39-4B5A-ACE9-A5F176510BBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{70F47414-D861-43BB-BEF0-B707EF7A656D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70F47414-D861-43BB-BEF0-B707EF7A656D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70F47414-D861-43BB-BEF0-B707EF7A656D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE9B3ED8-CC39-4B5A-ACE9-A5F176510BBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE9B3ED8-CC39-4B5A-ACE9-A5F176510BBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE9B3ED8-CC39-4B5A-ACE9-A5F176510BBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE9B3ED8-CC39-4B5A-ACE9-A5F176510BBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
