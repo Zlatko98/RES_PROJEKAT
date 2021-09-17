@@ -70,6 +70,91 @@ namespace BazaPodataka
             Diskonektovanje();
         }
 
+        public void AzurirajKvar(string id, string kratakOpis, string uzrok, string detaljanOpis, Status status, DateTime vreme, string akcija, string elektricniElement)
+        {
+            Konektovanje();
+
+            if (status == Status.ZATVORENO)
+            {
+                if (Con.State == System.Data.ConnectionState.Open)
+                {
+                    string q = "update [Kvarovi]  set status ='" + status + "', kratakOpis='" + kratakOpis + "', detaljanOpis='" + detaljanOpis + "', opisAkcije = '" + akcija + "', datumZatvaranjaKvara = '" + DateTime.Now + "' where Id ='" + id + "'";
+                    SqlCommand com = new SqlCommand(q, Con);
+                    com.ExecuteNonQuery();
+                }
+            }
+            else
+            {
+                if (Con.State == System.Data.ConnectionState.Open)
+                {
+                    string q = "update [Kvarovi]  set status ='" + status + "', kratakOpis='" + kratakOpis + "', detaljanOpis='" + detaljanOpis + "', opisAkcije = '" + akcija + "' where Id ='" + id + "'";
+                    SqlCommand com = new SqlCommand(q, Con);
+                    com.ExecuteNonQuery();
+                }
+            }
+
+            if (Con.State == System.Data.ConnectionState.Open)
+            {
+                string q = "update [Kvarovi]  set status ='" + status + "', kratakOpis='" + kratakOpis + "', detaljanOpis='" + detaljanOpis + "', opisAkcije = '" + akcija + "' where Id ='" + id + "'";
+                SqlCommand com = new SqlCommand(q, Con);
+                com.ExecuteNonQuery();
+            }
+
+            Diskonektovanje();
+        }
+
+        public List<Kvar> GetKvarovi(DateTime date1, DateTime date2)
+        {
+            Konektovanje();
+            List<Kvar> kvarovi = new List<Kvar>();
+            string query = "select * from [Kvarovi]";
+            SqlCommand com = new SqlCommand(query, Con);
+
+            if (Con.State != System.Data.ConnectionState.Open)
+            {
+                Con.Open();
+            }
+
+            SqlDataReader reader = com.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    Kvar k = new Kvar();
+                    //Akcija a = new Akcija();
+
+                    //a.Opis = reader["opisAkcije"].ToString();
+                    //a.Vreme = DateTime.Parse(reader["vremeAkcije"].ToString());
+
+                    k.DatumKvara = DateTime.Parse(reader["datumKvara"].ToString());
+
+                    if ((DateTime.Compare(k.DatumKvara, date1) > 0) && (DateTime.Compare(k.DatumKvara, date2) < 0))
+                    {
+                        k.Id = reader["Id"].ToString();
+
+                        //k.DatumZatvaranjaKvara = DateTime.Parse(reader["datumZatvaranjaKvara"].ToString());
+                        k.Status = (Status)Enum.Parse(typeof(Status), reader["status"].ToString());
+                        k.DetaljanOpis = reader["detaljanOpis"].ToString();
+                        k.KratakOpis = reader["kratakOpis"].ToString();
+                        k.Uzrok = reader["uzrok"].ToString();
+                        k.Akcija.Vreme = DateTime.Parse(reader["vremeAkcije"].ToString());
+                        k.Akcija.Opis = reader["opisAkcije"].ToString();
+
+                        kvarovi.Add(k);
+                    }
+                }
+            }
+            else
+            {
+                kvarovi = null;
+            }
+
+            reader.Close();
+            Diskonektovanje();
+            return kvarovi;
+        }
+
         public string CreateID(string kvarID)
         {
             string retID = "";
