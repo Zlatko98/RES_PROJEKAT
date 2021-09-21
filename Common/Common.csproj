@@ -33,6 +33,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.ServiceModel.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,6 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Akcija.cs" />
+    <Compile Include="IBaza.cs" />
+    <Compile Include="IExport.cs" />
+    <Compile Include="IKvar.cs" />
     <Compile Include="Kvar.cs" />
     <Compile Include="ElektricniElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Common
 {
-    interface IExport
+    [ServiceContract]
+    public interface IExport
     {
+        [OperationContract]
+        void ExportToExcel(List<Kvar> kvarovi);
+
+        [OperationContract]
+        void ExportToWord(Kvar kvar);
+
     }
 }
