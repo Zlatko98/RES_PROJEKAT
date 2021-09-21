@@ -89,7 +89,54 @@ namespace Servis
 
         public void ExportToWord(Kvar kvar)
         {
-            throw new NotImplementedException();
+            try
+            {
+                //Create an instance for word app  
+                Microsoft.Office.Interop.Word.Application winword = new Microsoft.Office.Interop.Word.Application();
+
+                //Set animation status for word application  
+                winword.ShowAnimation = false;
+
+                //Set status for word application is to be visible or not.  
+                winword.Visible = false;
+
+                //Create a missing variable for missing value  
+                object missing = System.Reflection.Missing.Value;
+
+                //Create a new document  
+                Microsoft.Office.Interop.Word.Document document = winword.Documents.Add(ref missing, ref missing, ref missing, ref missing);
+
+                //Add header into the document  
+                foreach (Microsoft.Office.Interop.Word.Section section in document.Sections)
+                {
+                    //Get the header range and add the header details.  
+                    Microsoft.Office.Interop.Word.Range headerRange = section.Headers[Microsoft.Office.Interop.Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
+                    headerRange.Fields.Add(headerRange, Microsoft.Office.Interop.Word.WdFieldType.wdFieldPage);
+                    headerRange.ParagraphFormat.Alignment = Microsoft.Office.Interop.Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                    headerRange.Font.ColorIndex = Microsoft.Office.Interop.Word.WdColorIndex.wdBlue;
+                    headerRange.Font.Size = 10;
+                    headerRange.Text = "-----KVAR-----";
+                }
+
+                //adding text to document  
+                document.Content.SetRange(0, 0);
+                document.Content.Text = kvar.ToWord();
+
+
+                //Save the document  
+                object filename = @"C:\Users\PTB\source\repos\RES\doc.docx";
+                document.SaveAs2(ref filename);
+                document.Close(ref missing, ref missing, ref missing);
+                document = null;
+                winword.Quit(ref missing, ref missing, ref missing);
+                winword = null;
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }
