@@ -211,5 +211,85 @@ namespace BazaPodataka
             return id;
 
         }
+
+        public Kvar GetKvar(string id)
+        {
+            Konektovanje();
+            Kvar kvar = new Kvar();
+            string query = "select * from [Kvarovi] where Id = '" + id + "'";
+            SqlCommand com = new SqlCommand(query, Con);
+
+            if (Con.State != System.Data.ConnectionState.Open)
+            {
+                Con.Open();
+            }
+
+            SqlDataReader reader = com.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+
+                    kvar.DatumKvara = DateTime.Parse(reader["datumKvara"].ToString());
+                    kvar.Id = reader["Id"].ToString();
+
+                    kvar.DatumZatvaranjaKvara = DateTime.Parse(reader["datumZatvaranjaKvara"].ToString());
+                    kvar.Status = (Status)Enum.Parse(typeof(Status), reader["status"].ToString());
+                    kvar.DetaljanOpis = reader["detaljanOpis"].ToString();
+                    kvar.KratakOpis = reader["kratakOpis"].ToString();
+                    kvar.Uzrok = reader["uzrok"].ToString();
+                    kvar.Akcija.Vreme = DateTime.Parse(reader["vremeAkcije"].ToString());
+                    kvar.Akcija.Opis = reader["opisAkcije"].ToString();
+
+                }
+            }
+
+
+            reader.Close();
+            Diskonektovanje();
+            return kvar;
+        }
+
+        public List<ElektricniElement> GetElektricniElementi()
+        {
+            Konektovanje();
+            List<ElektricniElement> elektricniElementi = new List<ElektricniElement>();
+            string query = "select * from [ElektricniElementi]";
+            SqlCommand com = new SqlCommand(query, Con);
+
+            if (Con.State != System.Data.ConnectionState.Open)
+            {
+                Con.Open();
+            }
+
+            SqlDataReader reader = com.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    ElektricniElement e = new ElektricniElement();
+
+                    e.Id = (int)reader["idElement"];
+                    e.Naziv = reader["naziv"].ToString();
+                    e.Lokacija = reader["lokacija"].ToString();
+                    e.Tip = reader["tip"].ToString();
+                    e.XKoordinata = float.Parse(reader["xKoordinata"].ToString());
+                    e.YKoordinata = float.Parse(reader["yKoordinata"].ToString());
+                    e.NaponskiNivo = reader["naponskiNivo"].ToString();
+
+                    elektricniElementi.Add(e);
+                }
+            }
+            else
+            {
+                elektricniElementi = null;
+            }
+
+            reader.Close();
+            Diskonektovanje();
+            return elektricniElementi;
+        }
     }
 }
