@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BazaPodataka
 {
-    public class Baza
+    public class Baza : IBaza
     {
         public static string con_string = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\PTB\\source\\repos\\RES_PROJEKAT\\BazaPodataka\\Baza.mdf;Integrated Security=True";
         SqlConnection con = new SqlConnection(con_string);
