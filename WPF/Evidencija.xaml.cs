@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Common;
+using Servis;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,14 @@ namespace WPF
     /// </summary>
     public partial class Evidencija : Page
     {
+        IKvar kvarServis = Factory.CreateKvarServis();
         public Evidencija()
         {
             InitializeComponent();
+
+            evidencijaBox.ItemsSource = null;
+            evidencijaBox.ItemsSource = kvarServis.GetElektricniElementi();
+            evidencijaBox.DisplayMemberPath = "FullInfo";
         }
 
         private void Button_Click_Back(object sender, RoutedEventArgs e)
