@@ -16,17 +16,16 @@ namespace Common
         [OperationContract]
         void Diskonektovanje();
         [OperationContract]
-        void DodajKvar(string kratakOpis, string uzrok, string detaljanOpis, DateTime vreme, string akcija, string elektricniElement);
+        void DodajKvar(IKvar kvar);
         [OperationContract]
-        void AzurirajKvar(string id, string kratakOpis, string uzrok, string detaljanOpis, Status status, DateTime vreme, string akcija, string elektricniElement);
+        void AzurirajKvar(IKvar kvar);
         [OperationContract]
         List<Kvar> GetKvarovi(DateTime date1, DateTime date2);
         [OperationContract]
         string GetLatestID();
         [OperationContract]
         string CreateID(string kvarID);
-        [OperationContract]
-        Kvar GetKvar(string id);
+
         [OperationContract]
         List<ElektricniElement> GetElektricniElementi();
     }

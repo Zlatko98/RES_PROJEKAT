@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace WPF
 {
     /// <summary>
@@ -22,14 +23,14 @@ namespace WPF
     /// </summary>
     public partial class Evidencija : Page
     {
-        IKvar kvarServis = Factory.CreateKvarServis();
+        IKvarServis kvarServis = Factory.CreateKvarServis();
         public Evidencija()
         {
             InitializeComponent();
 
             evidencijaBox.ItemsSource = null;
             evidencijaBox.ItemsSource = kvarServis.GetElektricniElementi();
-            evidencijaBox.DisplayMemberPath = "FullInfo";
+            evidencijaBox.DisplayMemberPath = "Display";
         }
 
         private void Button_Click_Back(object sender, RoutedEventArgs e)

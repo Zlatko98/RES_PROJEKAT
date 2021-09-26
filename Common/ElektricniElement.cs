@@ -30,7 +30,11 @@ namespace Common
         public string GetIDnaziv
         {
             get { return $"{ id }\t\t\t\t { naziv }"; }
+        }
 
+        public string Display
+        {
+            get { return $"{ id }\t\t { naziv }\t\t\t\t { tip }\t\t\t\t { lokacija }"; }
         }
 
     }

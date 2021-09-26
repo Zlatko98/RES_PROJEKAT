@@ -24,5 +24,29 @@ namespace WPF
         {
             InitializeComponent();
         }
+
+        private void Button_Click_ListaKvarova(object sender, RoutedEventArgs e)
+        {
+            ListaKvarova page = new ListaKvarova();
+            NavigationService.Navigate(page);
+        }
+
+        private void Button_Click_UnosKvara(object sender, RoutedEventArgs e)
+        {
+            UnosKvara page = new UnosKvara();
+            NavigationService.Navigate(page);
+        }
+
+        private void Button_Click_Evidencija(object sender, RoutedEventArgs e)
+        {
+            Evidencija page = new Evidencija();
+            NavigationService.Navigate(page);
+        }
+
+        private void Button_Click_Exit(object sender, RoutedEventArgs e)
+        {
+            Window parentWindow = Window.GetWindow(this);
+            parentWindow.Close();
+        }
     }
 }

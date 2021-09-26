@@ -40,21 +40,8 @@ namespace BazaPodataka
             }
         }
 
-        public void DodajKvar(string kratakOpis, string uzrok, string detaljanOpis, DateTime vreme, string akcija, string elektricniElement)
+        public void DodajKvar(IKvar kvar)
         {
-            Akcija akcija1 = new Akcija(akcija, vreme);
-
-            string el = elektricniElement.Remove(1, 4);
-
-            string[] parts = el.Split(' ');
-
-            int idElement = Int32.Parse(parts[0]);
-            string elElement = parts[1];
-
-            Kvar kvar = new Kvar(kratakOpis, uzrok, detaljanOpis, akcija1, elElement, idElement);
-
-            kvar.Id = CreateID(kvar.Id);
-
             Konektovanje();
             if (Con.State == System.Data.ConnectionState.Open)
             {
@@ -70,15 +57,15 @@ namespace BazaPodataka
             Diskonektovanje();
         }
 
-        public void AzurirajKvar(string id, string kratakOpis, string uzrok, string detaljanOpis, Status status, DateTime vreme, string akcija, string elektricniElement)
+        public void AzurirajKvar(IKvar kvar)
         {
             Konektovanje();
 
-            if (status == Status.ZATVORENO)
+            if (kvar.Status == Status.ZATVORENO)
             {
                 if (Con.State == System.Data.ConnectionState.Open)
                 {
-                    string q = "update [Kvarovi]  set status ='" + status + "', kratakOpis='" + kratakOpis + "', detaljanOpis='" + detaljanOpis + "', opisAkcije = '" + akcija + "', datumZatvaranjaKvara = '" + DateTime.Now + "' where Id ='" + id + "'";
+                    string q = "update [Kvarovi]  set status ='" + kvar.Status + "', kratakOpis='" + kvar.KratakOpis + "', detaljanOpis='" + kvar.DetaljanOpis + "', opisAkcije = '" + kvar.Akcija + "', datumZatvaranjaKvara = '" + DateTime.Now + "' where Id ='" + kvar.Id + "'";
                     SqlCommand com = new SqlCommand(q, Con);
                     com.ExecuteNonQuery();
                 }
@@ -87,17 +74,10 @@ namespace BazaPodataka
             {
                 if (Con.State == System.Data.ConnectionState.Open)
                 {
-                    string q = "update [Kvarovi]  set status ='" + status + "', kratakOpis='" + kratakOpis + "', detaljanOpis='" + detaljanOpis + "', opisAkcije = '" + akcija + "' where Id ='" + id + "'";
+                    string q = "update [Kvarovi]  set status ='" + kvar.Status + "', kratakOpis='" + kvar.KratakOpis + "', detaljanOpis='" + kvar.DetaljanOpis + "', opisAkcije = '" + kvar.Akcija + "' where Id ='" + kvar.Id + "'";
                     SqlCommand com = new SqlCommand(q, Con);
                     com.ExecuteNonQuery();
                 }
-            }
-
-            if (Con.State == System.Data.ConnectionState.Open)
-            {
-                string q = "update [Kvarovi]  set status ='" + status + "', kratakOpis='" + kratakOpis + "', detaljanOpis='" + detaljanOpis + "', opisAkcije = '" + akcija + "' where Id ='" + id + "'";
-                SqlCommand com = new SqlCommand(q, Con);
-                com.ExecuteNonQuery();
             }
 
             Diskonektovanje();
@@ -107,7 +87,7 @@ namespace BazaPodataka
         {
             Konektovanje();
             List<Kvar> kvarovi = new List<Kvar>();
-            string query = "select * from [Kvarovi]";
+            string query = "select * from [Kvarovi] where datumKvara between '" + date1 + "' and '" + date2 + "'";
             SqlCommand com = new SqlCommand(query, Con);
 
             if (Con.State != System.Data.ConnectionState.Open)
@@ -122,27 +102,19 @@ namespace BazaPodataka
                 while (reader.Read())
                 {
                     Kvar k = new Kvar();
-                    //Akcija a = new Akcija();
-
-                    //a.Opis = reader["opisAkcije"].ToString();
-                    //a.Vreme = DateTime.Parse(reader["vremeAkcije"].ToString());
 
                     k.DatumKvara = DateTime.Parse(reader["datumKvara"].ToString());
 
-                    if ((DateTime.Compare(k.DatumKvara, date1) > 0) && (DateTime.Compare(k.DatumKvara, date2) < 0))
-                    {
-                        k.Id = reader["Id"].ToString();
+                    k.Id = reader["Id"].ToString();
 
-                        //k.DatumZatvaranjaKvara = DateTime.Parse(reader["datumZatvaranjaKvara"].ToString());
-                        k.Status = (Status)Enum.Parse(typeof(Status), reader["status"].ToString());
-                        k.DetaljanOpis = reader["detaljanOpis"].ToString();
-                        k.KratakOpis = reader["kratakOpis"].ToString();
-                        k.Uzrok = reader["uzrok"].ToString();
-                        k.Akcija.Vreme = DateTime.Parse(reader["vremeAkcije"].ToString());
-                        k.Akcija.Opis = reader["opisAkcije"].ToString();
+                    k.Status = (Status)Enum.Parse(typeof(Status), reader["status"].ToString());
+                    k.DetaljanOpis = reader["detaljanOpis"].ToString();
+                    k.KratakOpis = reader["kratakOpis"].ToString();
+                    k.Uzrok = reader["uzrok"].ToString();
+                    k.Akcija.Vreme = DateTime.Parse(reader["vremeAkcije"].ToString());
+                    k.Akcija.Opis = reader["opisAkcije"].ToString();
 
-                        kvarovi.Add(k);
-                    }
+                    kvarovi.Add(k);
                 }
             }
             else
@@ -188,7 +160,7 @@ namespace BazaPodataka
         {
             Konektovanje();
             string id = "";
-            string query = "select top 1 Id from [Kvarovi] order by Id desc";
+            string query = "select top 1 Id from [Kvarovi] order by datumKvara desc";
             SqlCommand com = new SqlCommand(query, Con);
 
             if (Con.State != System.Data.ConnectionState.Open)
@@ -210,45 +182,6 @@ namespace BazaPodataka
             Diskonektovanje();
             return id;
 
-        }
-
-        public Kvar GetKvar(string id)
-        {
-            Konektovanje();
-            Kvar kvar = new Kvar();
-            string query = "select * from [Kvarovi] where Id = '" + id + "'";
-            SqlCommand com = new SqlCommand(query, Con);
-
-            if (Con.State != System.Data.ConnectionState.Open)
-            {
-                Con.Open();
-            }
-
-            SqlDataReader reader = com.ExecuteReader();
-
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-
-                    kvar.DatumKvara = DateTime.Parse(reader["datumKvara"].ToString());
-                    kvar.Id = reader["Id"].ToString();
-
-                    kvar.DatumZatvaranjaKvara = DateTime.Parse(reader["datumZatvaranjaKvara"].ToString());
-                    kvar.Status = (Status)Enum.Parse(typeof(Status), reader["status"].ToString());
-                    kvar.DetaljanOpis = reader["detaljanOpis"].ToString();
-                    kvar.KratakOpis = reader["kratakOpis"].ToString();
-                    kvar.Uzrok = reader["uzrok"].ToString();
-                    kvar.Akcija.Vreme = DateTime.Parse(reader["vremeAkcije"].ToString());
-                    kvar.Akcija.Opis = reader["opisAkcije"].ToString();
-
-                }
-            }
-
-
-            reader.Close();
-            Diskonektovanje();
-            return kvar;
         }
 
         public List<ElektricniElement> GetElektricniElementi()

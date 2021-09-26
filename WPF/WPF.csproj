@@ -58,6 +58,9 @@
     <Compile Include="ListaKvarova.xaml.cs">
       <DependentUpon>ListaKvarova.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PregledKvara.xaml.cs">
+      <DependentUpon>PregledKvara.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UnosKvara.xaml.cs">
       <DependentUpon>UnosKvara.xaml</DependentUpon>
     </Compile>
@@ -90,6 +93,10 @@
     <Page Include="ListaKvarova.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PregledKvara.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UnosKvara.xaml">
       <Generator>MSBuild:Compile</Generator>

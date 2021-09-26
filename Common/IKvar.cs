@@ -1,25 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Common
 {
-    [ServiceContract]
     public interface IKvar
     {
-        [OperationContract]
-        void unesiKvar(string kratakOpis, string uzrok, string detaljanOpis, DateTime vreme, string akcija, string elektricniElement);
+        Akcija Akcija { get; set; }
+        DateTime DatumKvara { get; set; }
+        DateTime DatumZatvaranjaKvara { get; set; }
+        string DetaljanOpis { get; set; }
+        string ElektricniElement { get; set; }
+        string FullInfo { get; }
+        string Id { get; set; }
+        int IdElement { get; set; }
+        string KratakOpis { get; set; }
+        Status Status { get; set; }
+        string Uzrok { get; set; }
 
-        [OperationContract]
-        void azurirajKvar(string id, string kratakOpis, string uzrok, string detaljanOpis, Status status, DateTime vreme, string akcija, string elektricniElement);
-
-        [OperationContract]
-        List<Kvar> GetKvarovi(DateTime date1, DateTime date2);
-
-        [OperationContract]
-        List<ElektricniElement> GetElektricniElementi();
+        string ToWord();
     }
 }

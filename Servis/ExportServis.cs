@@ -46,7 +46,7 @@ namespace Servis
                 }
             }
 
-            excelWorkBook.SaveAs(@"C:\Users\PTB\source\repos\RES\doc1.xlsx"); // -> this will do the custom
+            excelWorkBook.SaveAs(@"C:\Users\PTB\source\repos\RES\eceldoc.xlsx"); // -> this will do the custom
             excelWorkBook.Close();
             excelApp.Quit();
         }
@@ -124,7 +124,7 @@ namespace Servis
 
 
                 //Save the document  
-                object filename = @"C:\Users\PTB\source\repos\RES\doc.docx";
+                object filename = @"C:\Users\PTB\source\repos\RES\" + kvar.Id + ".docx";
                 document.SaveAs2(ref filename);
                 document.Close(ref missing, ref missing, ref missing);
                 document = null;
@@ -135,7 +135,7 @@ namespace Servis
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex.Message);
             }
         }
     }

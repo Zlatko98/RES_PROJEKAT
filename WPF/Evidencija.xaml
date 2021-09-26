@@ -111,16 +111,13 @@
 
                 <Label Content="Naziv elementa"
                     Foreground="White"
-                    FontSize="22" Margin="169,38,558,512"/>
+                    FontSize="22" Margin="201,38,526,512" RenderTransformOrigin="0.379,0.53"/>
                 <Label Content="Tip elementa"
                     Foreground="White"
-                    FontSize="22" Margin="369,38,358,512"/>
+                    FontSize="22" Margin="442,38,285,512"/>
                 <Label Content="Lokacija"
                     Foreground="White"
-                    FontSize="22" Margin="542,38,253,512"/>
-                <Label Content="Koordinate"
-                    Foreground="White"
-                    FontSize="22" Margin="647,38,118,512"/>
+                    FontSize="22" Margin="661,38,134,512" RenderTransformOrigin="1.158,0.487"/>
 
             </Grid>
 

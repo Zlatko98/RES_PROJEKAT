@@ -227,7 +227,7 @@
                            Grid.Column="2"
                            Foreground="White"
                            FontSize="22"
-                           HorizontalAlignment="Left" Margin="96,11,0,0" Grid.Row="3" VerticalAlignment="Top" Width="179" Height="37" Grid.ColumnSpan="2"/>
+                           HorizontalAlignment="Left" Margin="61,13,0,0" Grid.Row="3" VerticalAlignment="Top" Width="179" Height="37" Grid.ColumnSpan="2"/>
                 <DatePicker Grid.Column="3" 
                             Name="DPicker2" 
                             

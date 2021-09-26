@@ -15,7 +15,7 @@ namespace Servis
             return new Baza();
         }
 
-        public static IKvar CreateKvarServis()
+        public static IKvarServis CreateKvarServis()
         {
             return new KvarServis(CreateBaza());
         }
